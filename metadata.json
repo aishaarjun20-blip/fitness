@@ -1,0 +1,6 @@
+{
+  "name": "Fitness Track",
+  "description": "Official website for Fitness Track Gym in Kolkata, offering information on timings, location, classes, pricing, and inquiry submissions.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
