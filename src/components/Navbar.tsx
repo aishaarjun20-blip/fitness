@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getKolkataStatus, GymStatus } from '../utils/time';
 import { GYM_CONTACT } from '../data';
 import { Phone, Menu, X, Dumbbell, Clock } from 'lucide-react';
@@ -35,6 +35,26 @@ export default function Navbar() {
     { name: 'Hours & Location', href: '#location' },
   ];
 
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      setTimeout(() => {
+        const navbarHeight = 80; // approximate height of our sticky header
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - navbarHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 50);
+    }
+  };
+
   return (
     <header 
       id="navbar"
@@ -48,7 +68,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <a href="#hero" className="flex items-center gap-2 group">
+          <a 
+            href="#hero" 
+            onClick={(e) => handleScrollTo(e, '#hero')}
+            className="flex items-center gap-2 group"
+          >
             <div className="p-2 bg-brand rounded-lg text-zinc-950 group-hover:scale-105 transition-transform duration-200">
               <Dumbbell className="h-5 w-5 stroke-[2.5]" />
             </div>
@@ -63,6 +87,7 @@ export default function Navbar() {
               <a 
                 key={link.name} 
                 href={link.href}
+                onClick={(e) => handleScrollTo(e, link.href)}
                 className="text-zinc-400 hover:text-brand font-medium text-sm transition-colors duration-200 uppercase tracking-wider"
               >
                 {link.name}
@@ -90,6 +115,7 @@ export default function Navbar() {
             {/* Join Button */}
             <a 
               href="#contact" 
+              onClick={(e) => handleScrollTo(e, '#contact')}
               className="px-5 py-2.5 bg-brand text-zinc-950 font-display font-bold text-sm tracking-wide rounded-lg uppercase hover:bg-brand-hover transition-colors duration-200"
             >
               Book Free Trial
@@ -123,10 +149,10 @@ export default function Navbar() {
         {isOpen && (
           <motion.div
             id="mobile-nav-panel"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
             className="lg:hidden bg-zinc-950 border-b border-zinc-800"
           >
             <div className="px-4 pt-2 pb-6 space-y-4">
@@ -142,7 +168,7 @@ export default function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => handleScrollTo(e, link.href)}
                     className="p-3 rounded-lg text-zinc-300 hover:bg-zinc-900 hover:text-brand font-semibold text-base uppercase tracking-wide transition-colors"
                   >
                     {link.name}
@@ -163,7 +189,7 @@ export default function Navbar() {
                 {/* Free trial */}
                 <a
                   href="#contact"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => handleScrollTo(e, '#contact')}
                   className="w-full text-center py-3 bg-brand text-zinc-950 rounded-lg font-display font-bold text-base uppercase tracking-wider block hover:bg-brand-hover transition-colors"
                 >
                   Book Free Trial
