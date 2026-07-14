@@ -67,7 +67,7 @@ export default function Services({ onServiceSelect }: ServicesProps) {
   });
 
   return (
-    <section id="services" className="py-24 bg-zinc-950 border-t border-zinc-900 relative">
+    <section id="services" className="py-24 bg-zinc-950 border-t border-zinc-900 relative overflow-hidden">
       {/* Background ambient light */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand/5 rounded-full filter blur-[120px] pointer-events-none -z-10" />
 
